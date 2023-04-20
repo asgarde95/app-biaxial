@@ -1,17 +1,16 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import { hex } from "@/util/util.js";
-import { getUsbInfo } from "@/util/usb-ids.js";
+import { defineStore } from 'pinia';
+import { hex } from "@/util/util";
+import { getUsbInfo } from "@/util/usb-ids";
 
 const vid_pid = (port) => {
-  const info = port.getInfo();
-  return hex(info.usbVendorId) + ":" + hex(info.usbProductId);
-};
-const encoder = new TextEncoder();
+  const info = port.getInfo()
+  return hex(info.usbVendorId) + ':' + hex(info.usbProductId)
+}
+
 const decoder = new TextDecoder();
 
 const useConnectionStore = defineStore({
-  id: "connection",
+  id: 'connection',
   state: () => ({
     id: undefined,
     vendor: undefined,
@@ -21,116 +20,134 @@ const useConnectionStore = defineStore({
     open: false,
     _reader: undefined,
     options: {
-      baudRate: ref(115200),
-      bufferSize: ref(255),
-      dataBits: ref(8),
-      flowControl: ref("none"),
-      parity: ref("none"),
-      stopBits: ref(1),
+      baudRate: 115200,
+      bufferSize: 4096,
+      dataBits: 8,
+      flowControl: "none",
+      parity: "none",
+      stopBits: 1
     },
     signals: {},
     messages: [],
-    prepend: "",
-    append: "\n",
   }),
-  getters: {},
+  getters: {
+  },
   actions: {
     async selectPort() {
       try {
-        if (!navigator.serial) return false;
+        if (!navigator.serial) return false
 
-        const port = await navigator.serial.requestPort();
-        const info = await getUsbInfo(port);
-        window.location.search = `?vid=${info.vid}&pid=${info.pid}`;
-        return true;
-      } catch (e) {}
+        const port = await navigator.serial.requestPort()
+        //@ts-ignore
+        const info = await getUsbInfo(port)
+        window.location.search = `?vid=${info.vid}&pid=${info.pid}`
+        return true
+      }
+      catch (e) { }
     },
+
     async init(vid, pid) {
-      const ports = await navigator.serial.getPorts();
-      const id = vid + ":" + pid;
-      this.port = ports.find((port) => vid_pid(port) === id);
+      const ports = await navigator.serial.getPorts()
+      const id = vid + ':' + pid
+      //@ts-ignore
+      this.port = ports.find((port) => vid_pid(port) === id)
       if (!this.port) {
-        window.location.search = ``;
+        window.location.search = ``
         return;
       }
-      this.id = id;
-      const info = await getUsbInfo(this.port);
-      this.vendor = info.vendor;
-      this.product = info.product;
-      this.physicallyConnected = true;
+      //@ts-ignore
+      this.id = id
+      //@ts-ignore
+      const info = await getUsbInfo(this.port)
+      this.vendor = info.vendor
+      this.product = info.product
+      this.physicallyConnected = true
 
       // notification for a USB device getting physically connected
       const onconnect = (e) => {
-        console.log(id + "device connected", e);
-        this.port = e.target;
-        this.physicallyConnected = true;
-      };
-      navigator.serial.addEventListener("connect", onconnect);
+        console.log(id + 'device connected', e)
+        this.port = e.target
+        this.physicallyConnected = true
+      }
+      navigator.serial.addEventListener('connect', onconnect);
 
       // notification for a USB device getting physically disconnected
       const ondisconnect = (e) => {
-        console.log(id + " disconnect");
-        this.physicallyConnected = false;
-        this.open = false;
-      };
-      navigator.serial.addEventListener("disconnect", ondisconnect);
-      console.log(id + " initialized");
+        console.log(id + ' disconnect')
+        this.physicallyConnected = false
+        this.open = false
+      }
+      navigator.serial.addEventListener('disconnect', ondisconnect);
+      console.log(id + ' initialized')
     },
+
     async connect() {
-      if (!this.port) return;
-      console.log(this.id + ": opening");
+      if (!this.port) return
+      console.log(this.id + ': opening')
       try {
-        await this.port.open(this.options);
-        this.open = !!this.port?.readable;
-        console.log(this.id + ": opened");
-        // const { clearToSend, dataCarrierDetect, dataSetReady, ringIndicator} = await this.port.getSignals()
-        // console.log({ clearToSend, dataCarrierDetect, dataSetReady, ringIndicator})
-        this.monitor();
-      } catch (e) {
-        console.log(e);
-        window.alert(e.message);
+        //@ts-ignore
+        await this.port.open(this.options)
+        //@ts-ignore
+        this.open = !!this.port?.readable
+        console.log(this.id + ': opened')
+        this.read()
+        console.log(this.options.baudRate)
+      }
+      catch (e) {
+        console.log(e)
+        //@ts-ignore
+        window.alert(e.message)
       }
     },
-    async monitor() {
-      console.log("monitor()");
+
+    async read() {
+      // console.log('Reading from SerialPort()')
+      //@ts-ignore
       while (this.open && this.port?.readable) {
-        this.open = true;
-        const reader = this.port.readable.getReader();
-        this._reader = reader;
+        this.open = true
+        //@ts-ignore
+        const reader = this.port.readable.getReader()
+        //@ts-ignore
+        this._reader = reader
         try {
           while (this.open) {
-            console.log("reading...");
+            console.log('reading...')
             const { value, done } = await reader.read();
             if (done) {
               // |reader| has been canceled.
               this.open = false;
               break;
             }
-            const decoded = decoder.decode(value);
-            // console.log('read complete:', decoded, value, done)
+            const decoded = decoder.decode(value) + "\n";
+            // console.log('read complete:', decoded, value, done);
+            //@ts-ignore
             this.messages.push(decoded);
+            await this.delay(1000);
           }
         } catch (error) {
-          console.error("reading error", error);
+          console.error('reading error', error);
         } finally {
-          reader.releaseLock();
+          reader.releaseLock()
         }
       }
     },
-    async write(data) {
-      if (this.port?.writable) {
-        const writer = this.port.writable.getWriter();
-        await writer.write(encoder.encode(data));
-        writer.releaseLock();
-      }
-    },
+
     async close() {
       if (this._reader) {
-        await this._reader.cancel();
+        //@ts-ignore
+        await this._reader.cancel()
       }
-      this.port.close();
+      //@ts-ignore
+      this.port.close()
     },
-  },
-});
 
-export { useConnectionStore };
+    delay(milliseconds){
+      return new Promise(resolve => {
+          setTimeout(resolve, milliseconds);
+      });
+  },
+
+  }
+})
+
+export { useConnectionStore }
