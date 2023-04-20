@@ -1,0 +1,66 @@
+#app{
+  height: 100%;
+}
+
+body, html{
+  background: linear-gradient(to bottom right, #55566a, #282834);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+.container{
+  max-width: 100%;
+}
+
+#biaxial{
+  color: darkmagenta;
+  text-shadow: 1px 1px white;
+}
+
+h1{
+  text-align: center;
+  color: white;
+}
+
+h2 {
+  color: white;
+}
+
+h3 {
+  color: darkmagenta;
+  text-shadow: 1px 1px white;
+}
+
+p{
+  color: white
+}
+
+footer {
+    text-align: center;
+    min-height:50px;
+}
+
+.desconnected {
+  color: red;
+}
+
+.connected {
+  color: green;
+}
+
+.logo {
+  float: left;
+  line-height: 0%;
+  padding-left: 10px;
+}
+
+.menu {
+  padding: 10px;
+  text-align: right;
+}
+
+#output.newlines > pre > br {
+  display: initial;
+}

@@ -1,0 +1,27 @@
+{
+  "name": "app-biaxial",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "bootstrap-vue": "^2.23.1",
+    "chart.js": "^4.2.1",
+    "pinia": "^2.0.35",
+    "register-service-worker": "^1.7.2",
+    "serialport": "^10.5.0",
+    "vue": "^3.2.47",
+    "vue-chartjs": "^5.2.0",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-pwa": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0"
+  }
+}
