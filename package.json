@@ -11,6 +11,7 @@
     "bootstrap-icons": "^1.10.4",
     "bootstrap-vue": "^2.23.1",
     "chart.js": "^4.2.1",
+    "express": "^4.18.2",
     "pinia": "^2.0.35",
     "register-service-worker": "^1.7.2",
     "serialport": "^10.5.0",
