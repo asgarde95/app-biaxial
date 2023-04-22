@@ -51,7 +51,7 @@
                 </label>
             </div>
             <div class="col-2">
-                <h4>PARAMETERS</h4>
+                <h4>RUN A TEST</h4>
                 <button>Start Constant Elongation Test</button>
                 <button>Start Peel Test</button>
                 <button>Start Break Test</button>
