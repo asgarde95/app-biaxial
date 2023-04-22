@@ -4,7 +4,6 @@ import HomeView from "@/views/HomeView.vue";
 import RealTimeView from "@/views/RealTimeView.vue";
 import OfflineView from "@/views/OfflineView.vue";
 import ConsoleView from "@/views/ConsoleView.vue";
-import ConfigurationView from "@/views/ConfigurationView.vue";
 import AboutView from "@/views/AboutView.vue";
 
 const routes = [
@@ -27,11 +26,6 @@ const routes = [
     path: "/console",
     name: "Console",
     component: ConsoleView,
-  },
-  {
-    path: "/configuration",
-    name: "Configuration",
-    component: ConfigurationView,
   },
   {
     path: "/about",

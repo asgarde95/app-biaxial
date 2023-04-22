@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.4",
     "bootstrap-vue": "^2.23.1",
     "chart.js": "^4.2.1",
     "pinia": "^2.0.35",

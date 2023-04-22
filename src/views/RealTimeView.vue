@@ -3,18 +3,6 @@
     <div class="container" style="margin-left=0px; margin-right=0px;">
         <h1>Gráfico RealTime</h1>
         <div class="row">
-            <div class="col-2">
-                <label>
-                    <p>Maximum elongation(mm): <input type="number" v-model="elongation" style="width:100px;" />
-                    </p>
-                </label>
-                <label>
-                    <p>Speed(mm/min): <input type="number" v-model="speed" style="width:70px;" />
-                    </p>
-                </label>
-                <button>Start Constant Elongation Test</button>
-                <button>Start Peel Test</button>
-            </div>
             <div class="col-8">
                 <Chart></Chart>
                 <div class="botones">
@@ -33,8 +21,9 @@
                 </div>
             </div>
             <div class="col-2">
+                <h4>PARAMETERS</h4>
                 <label>
-                    <p>Which load cell ...
+                    <p>Load cell multiplier
                         <select v-model="cell">
                             <option v-for="option in options.cell" :value="option">
                                 {{ option }}
@@ -52,6 +41,19 @@
                         </select>
                     </p>
                 </label>
+                <label>
+                    <p>Maximum elongation(mm): <input type="number" v-model="elongation" style="width:100px;" />
+                    </p>
+                </label>
+                <label>
+                    <p>Speed(mm/min): <input type="number" v-model="speed" style="width:70px;" />
+                    </p>
+                </label>
+            </div>
+            <div class="col-2">
+                <h4>PARAMETERS</h4>
+                <button>Start Constant Elongation Test</button>
+                <button>Start Peel Test</button>
                 <button>Start Break Test</button>
                 <button>Pre-tensioning</button>
                 &nbsp;

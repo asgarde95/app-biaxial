@@ -33,6 +33,11 @@ h3 {
   text-shadow: 1px 1px white;
 }
 
+h4 {
+  color: white;
+  text-decoration: underline;
+}
+
 p{
   color: white
 }

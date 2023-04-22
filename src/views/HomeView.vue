@@ -8,9 +8,9 @@
                     realizar
                     pruebas
                     de estrés sobre tejidos.
-                    <br />
+                    <br/>
                     Debes de tener una placa arduino con el sketch necesario para poder utilizar esta aplicación.
-                    <br />
+                    <br/>
                     Más información acerca de los requerimientos software y hardware a continuación:
                 </p>
                 <p class="text-justify">
@@ -26,7 +26,7 @@
                     comenzar:
                 </p>
                 <p class="text-justify">
-                    <RouterLink to="/Configuration" class="btn btn-lg btn-light fw-bold border-white bg-white">Configuración
+                    <RouterLink to="/RealTime" class="btn btn-lg btn-light fw-bold border-white bg-white">Let's go
                     </RouterLink>
                 </p>
             </div>
