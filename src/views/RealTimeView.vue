@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-4">
         <div class="botones">
-          Distancia: 
+          Distancia:
           <button class="btn btn-secondary" @click="move(100)">+100</button>
           <button class="btn btn-secondary" @click="move(100)">+10</button>
           <button class="btn btn-secondary" @click="move(100)">+1</button>
@@ -16,25 +16,29 @@
           <button class="btn btn-secondary" @click="move(-10)">-10</button>
           <button class="btn btn-secondary" @click="move(-100)">-100</button>
         </div>
-        <div class="col-1 boton-top ">
-          <input class="row" style="color: red" value="1000.01" size="5" />
-          <button>Boton</button>
+        <div class="col-md-12">
+          <div class="col-2 boton-top ">
+            <input class="row" style="color: red" value="1000.01" size="5" />
+            <input class="form-check-input" type="checkbox" id="top-axis" v-model="axis.top">
+          </div>
+          <div class="row">
+            <div class="col-1 boton-left">
+              <input style="color: blue" value="1000.01" size="5" />
+              <input class="form-check-input"  type="checkbox" id="left-axis" v-model="axis.left">
+            </div>
+            <div class="col-4">
+              <img src="@/assets/planar-biaxial-arrow.png" alt="Biaxial axis" width="150" height="150"/>
+            </div>
+            <div class="col-1 boton-right">
+              <input style="color: orange" value="1000.01" size="5" />
+              <input class="form-check-input" type="checkbox" id="right-axis" v-model="axis.right">
+            </div>
+          </div>
+          <div class="col-1 boton-down">
+            <input class="row" style="color: green" value="1000.01" size="5" />
+            <input class="form-check-input" type="checkbox" id="bottom-axis" v-model="axis.bottom">
+          </div>
         </div>
-        <div class="row">
-          <div class="col-1 boton-left">
-          <input style="color: blue" value="1000.01" size="5" />
-          <button>Boton</button>
-        </div>
-        <div class="col-6"></div>
-          <div class="col-1 boton-right">
-          <input style="color: orange" value="1000.01" size="5" />
-          <button>Boton</button>
-        </div>
-      </div>
-      <div class="col-1 boton-down">
-        <input class="row" style="color: green" value="1000.01" size="5" />
-        <button>Boton</button>
-      </div>
       </div>
     </div>
     <div class="row">
@@ -47,30 +51,30 @@
         <div class="row">
           <button class="col-4 btn btn-light">Start Break Test</button>
           <button class="col-4 btn btn-light">Pre-tensioning</button>
-          <input class="form-control" type="number" style="width: 15%;"/>
+          <input class="form-control" type="number" style="width: 15%;" />
         </div>
       </div>
       <div class="col-md-6">
-          <h4>PARAMETERS</h4>
-            <div class="row params">
-              Load cell multiplier
-              &nbsp;
-              <select class="col-4 form-control" v-model="cell" style="width: 125px">
-                <option v-for="option in options.cell" :value="option">
-                  {{ option }}
-                </option>
-                <option></option>
-              </select>
-              &nbsp;
-                Speed(mm/min):
-                &nbsp;
-                <input class="col-3 form-control" type="number" v-model="speed" style="width: 70px" />
-            </div>
-            <div class="row params">
-              Maximum elongation(mm):
-              &nbsp; 
-              <input class="col-3 form-control" type="number" v-model="elongation" style="width: 70px" />
-          </div>
+        <h4>PARAMETERS</h4>
+        <div class="row params">
+          Load cell multiplier
+          &nbsp;
+          <select class="col-4 form-control" v-model="cell" style="width: 125px">
+            <option v-for="option in options.cell" :value="option">
+              {{ option }}
+            </option>
+            <option></option>
+          </select>
+          &nbsp;
+          Speed(mm/min):
+          &nbsp;
+          <input class="col-3 form-control" type="number" v-model="speed" style="width: 70px" />
+        </div>
+        <div class="row params">
+          Maximum elongation(mm):
+          &nbsp;
+          <input class="col-3 form-control" type="number" v-model="elongation" style="width: 70px" />
+        </div>
       </div>
     </div>
   </div>
@@ -98,6 +102,12 @@ export default defineComponent({
         command: [0, 1, 2, 3, 12, 30, -1, 255],
         cell: [5, 50, 100],
       },
+      axis: {
+        top: false,
+        left: false,
+        right: false,
+        bottom: false,
+      }
     };
   },
   mounted() { },
@@ -133,24 +143,26 @@ export default defineComponent({
   margin: 3px;
 }
 
-.params{
+.params {
   color: white;
 }
 
-.boton-top{
+.boton-top {
   margin: auto;
   width: 50%;
   padding: 10px;
 }
-.boton-left{
+
+.boton-left {
   padding: 10px;
 }
-.boton-right{
+
+.boton-right {
   padding: 10px;
 }
-.boton-down{
+
+.boton-down {
   margin: auto;
   width: 50%;
   padding: 10px;
-}
-</style>
+}</style>
