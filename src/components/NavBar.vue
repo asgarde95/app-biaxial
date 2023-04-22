@@ -40,9 +40,6 @@
                         <RouterLink class="link" to="/Console">Consola</RouterLink>
                     </div>
                     <div class="menu-item">
-                        <RouterLink class="link" to="/Configuration">Configuración</RouterLink>
-                    </div>
-                    <div class="menu-item">
                         <RouterLink class="link" to="/About">Información</RouterLink>
                     </div>
                     <div class="menu-item">
