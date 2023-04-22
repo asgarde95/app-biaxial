@@ -1,18 +1,20 @@
 <template>
-    <div class="navBar">
+    <div class="logo-connect">
         <div class="logo">
             <h3>BIAXIAL</h3>
             <label v-if="connection.open" class="connected">Conectado</label>
             <label v-else-if="connection.physicallyConnected">Enchufado</label>
             <label v-else class="desconnected">Desconectado</label>
         </div>
-        <div>
-            <button v-if="!connection.id || !connection.physicallyConnected"
+        <div class="connection">
+            <button class="btn btn-secondary" v-if="!connection.id || !connection.physicallyConnected"
                             @click="connection.selectPort">Seleccionar
                             puerto</button>
-                        <button v-else-if="connection.open" @click="connection.close">Desconectar</button>
-                        <button v-else @click="connection.connect">Conectar</button>
+                        <button class="btn btn-danger" v-else-if="connection.open" @click="connection.close">Desconectar</button>
+                        <button class="btn btn-success" v-else @click="connection.connect">Conectar</button>
         </div>
+    </div>
+        <div class="menu-trad">
         <div class="traduccion">
             <button class="btn btn-secondary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-translate"
@@ -26,25 +28,25 @@
                 </svg>
             </button>
         </div>
-        <div class="menu menu-item" @click="toggleMenu">
-            <a class="link" style="background-color: darkmagenta; color: white;" href='#'>MENÚ</a>
+        <div class="menu" @click="toggleMenu">
+            <button class="btn" style="background-color: darkmagenta; color: white;" href='#'>MENÚ</button>
             <transition name="fade" apear>
                 <div class="sub-menu" v-if="openMenu">
-                    <div class="menu-item">
+                    <button class="btn btn-light">
                         <RouterLink class="link" to="/RealTime">RealTime</RouterLink>
-                    </div>
-                    <div class="menu-item">
+                    </button>
+                    <button class="btn btn-light">
                         <RouterLink class="link" to="/Offline">Offline</RouterLink>
-                    </div>
-                    <div class="menu-item">
+                    </button>
+                    <button class="btn btn-light">
                         <RouterLink class="link" to="/Console">Consola</RouterLink>
-                    </div>
-                    <div class="menu-item">
+                    </button>
+                    <button class="btn btn-light">
                         <RouterLink class="link" to="/About">Información</RouterLink>
-                    </div>
-                    <div class="menu-item">
+                    </button>
+                    <button class="btn btn-light">
                         <RouterLink class="link" to="/">Salir</RouterLink>
-                    </div>
+                    </button>
                 </div>
             </transition>
         </div>
@@ -67,30 +69,41 @@ function toggleMenu() {
 <style>
 .link {
     text-decoration: none;
-    background-color: white;
     color: black;
-    border-radius: 10px;
-    border: 2px solid black;
-    padding: 2px;
-    margin: 10px;
+}
+.btn {
+    margin-top: 3%;
 }
 
-.menu {
-    display: inline-block;
+
+.sub-menu {
+    position: absolute;
+    right: -5%;
+    text-align: right;
+}
+
+.menu-trad {
+    display: inline-flex;
     position: absolute;
     z-index: 100;
-    right: 0%;
+    right: 12px;
+}
+.logo-connect {
+    display: inline-flex;
+    position: absolute;
+    z-index: 100;
+    left: 0%;
 }
 
-.menu-item {
-    padding-top: 5px;
+.connection {
+    margin-left: 5px;
 }
 
 .traduccion {
-    display: inline-block;
-    position: absolute;
-    z-index: 100;
-    right: 6%;
-    padding-top: 5px;
+    margin: 2%;
+}
+
+.menu {
+    margin: 2%;
 }
 </style>

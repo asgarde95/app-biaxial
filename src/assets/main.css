@@ -61,11 +61,6 @@ footer {
   padding-left: 10px;
 }
 
-.menu {
-  padding: 10px;
-  text-align: right;
-}
-
 #output.newlines > pre > br {
   display: initial;
 }
