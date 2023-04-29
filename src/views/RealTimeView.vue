@@ -6,38 +6,44 @@
       <div class="col-md-8">
         <Chart></Chart>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" style="color:white;">
+        Distancia:
         <div class="botones">
-          Distancia:
           <button class="btn btn-secondary" @click="move(100)">+100</button>
           <button class="btn btn-secondary" @click="move(100)">+10</button>
           <button class="btn btn-secondary" @click="move(100)">+1</button>
+        </div>
+        <div class="botones">
           <button class="btn btn-secondary" @click="move(-1)">-1</button>
           <button class="btn btn-secondary" @click="move(-10)">-10</button>
           <button class="btn btn-secondary" @click="move(-100)">-100</button>
         </div>
-        <div class="col-md-12">
-          <div class="col-2 boton-top ">
-            <input class="row" style="color: red" value="1000.01" size="5" />
-            <input class="form-check-input" type="checkbox" id="top-axis" v-model="axis.top">
-          </div>
-          <div class="row">
-            <div class="col-1 boton-left">
+        <div class="col-md-12" style="margin-top: 35px;">
+          <section class="layout">
+            <div></div>
+            <div>
+              <input class="row" style="color: red" value="1000.01" size="5" />
+              <input class="form-check-input" type="checkbox" id="top-axis" v-model="axis.top">
+            </div>
+            <div></div>
+            <div>
               <input style="color: blue" value="1000.01" size="5" />
-              <input class="form-check-input"  type="checkbox" id="left-axis" v-model="axis.left">
+              <input class="form-check-input" type="checkbox" id="left-axis" v-model="axis.left">
             </div>
-            <div class="col-4">
-              <img src="@/assets/planar-biaxial-arrow.png" alt="Biaxial axis" width="150" height="150"/>
+            <div>
+              <img src="@/assets/planar-biaxial-arrow.png" alt="Biaxial axis" width="150" height="150" />
             </div>
-            <div class="col-1 boton-right">
+            <div>
               <input style="color: orange" value="1000.01" size="5" />
               <input class="form-check-input" type="checkbox" id="right-axis" v-model="axis.right">
             </div>
-          </div>
-          <div class="col-1 boton-down">
-            <input class="row" style="color: green" value="1000.01" size="5" />
-            <input class="form-check-input" type="checkbox" id="bottom-axis" v-model="axis.bottom">
-          </div>
+            <div></div>
+            <div>
+              <input class="row" style="color: green" value="1000.01" size="5" />
+              <input class="form-check-input" type="checkbox" id="bottom-axis" v-model="axis.bottom">
+            </div>
+            <div></div>
+          </section>
         </div>
       </div>
     </div>
@@ -124,12 +130,10 @@ export default defineComponent({
 <style scoped>
 .botones {
   display: flex;
-  justify-content: space-between;
-  color: white;
 }
 
 .botones button {
-  width: 55px;
+  margin-left: 30px;
 }
 
 .valores {
@@ -147,22 +151,16 @@ export default defineComponent({
   color: white;
 }
 
-.boton-top {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
+.layout {
+  width: 10%;
+  height: 10%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.boton-left {
-  padding: 10px;
+.layout div{
+  align-self: center;
+  text-align: center;
+  justify-self: center;
 }
-
-.boton-right {
-  padding: 10px;
-}
-
-.boton-down {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-}</style>
+</style>
