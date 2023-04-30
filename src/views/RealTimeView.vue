@@ -81,6 +81,9 @@
           &nbsp;
           <input class="col-3 form-control" type="number" v-model="elongation" style="width: 70px" />
         </div>
+        <div class="row params">
+          <button class="btn btn-secondary" @click="updateData()">Recargar Datos</button>
+        </div>
       </div>
     </div>
   </div>
@@ -125,6 +128,24 @@ export default defineComponent({
     },
   },
 });
+</script>
+
+<script setup>
+import { useConnectionStore } from '@/store/connection'
+import {decode, encode, encodeWithHtml} from '@/util/asciiEncoder';
+import {ref, watch} from 'vue';
+
+const connection = useConnectionStore()
+
+let prepend = ref('')
+let append = ref('\n')
+
+function updateData() {
+  const cmd = prepend.value + '?' + append.value
+  connection.write(decode(cmd));
+  console.log('Recargando datos');
+}
+
 </script>
 
 <style scoped>

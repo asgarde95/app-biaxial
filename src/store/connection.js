@@ -1,12 +1,14 @@
-import { defineStore } from 'pinia';
-import { hex } from "@/util/util";
-import { getUsbInfo } from "@/util/usb-ids";
+import { defineStore } from 'pinia'
+import {ref} from "vue";
+import {hex} from "@/util/util.js";
+import { getUsbInfo } from "@/util/usb-ids.js"
+import { encodeWithHtml } from '@/util/asciiEncoder';
 
 const vid_pid = (port) => {
   const info = port.getInfo()
   return hex(info.usbVendorId) + ':' + hex(info.usbProductId)
 }
-
+const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
 const useConnectionStore = defineStore({
@@ -20,15 +22,17 @@ const useConnectionStore = defineStore({
     open: false,
     _reader: undefined,
     options: {
-      baudRate: 115200,
-      bufferSize: 4096,
-      dataBits: 8,
-      flowControl: "none",
-      parity: "none",
-      stopBits: 1
+      baudRate: ref(115200),
+      bufferSize: ref(4096),
+      dataBits: ref(8),
+      flowControl: ref("none"),
+      parity: ref("none"),
+      stopBits: ref(1)
     },
     signals: {},
     messages: [],
+    prepend: '',
+    append: '\n'
   }),
   getters: {
   },
@@ -42,9 +46,8 @@ const useConnectionStore = defineStore({
         window.location.search = `?vid=${info.vid}&pid=${info.pid}`
         return true
       }
-      catch (e) { }
+      catch(e) {}
     },
-
     async init(vid, pid) {
       const ports = await navigator.serial.getPorts()
       const id = vid + ':' + pid
@@ -76,7 +79,6 @@ const useConnectionStore = defineStore({
       navigator.serial.addEventListener('disconnect', ondisconnect);
       console.log(id + ' initialized')
     },
-
     async connect() {
       if (!this.port) return
       console.log(this.id + ': opening')
@@ -84,17 +86,17 @@ const useConnectionStore = defineStore({
         await this.port.open(this.options)
         this.open = !!this.port?.readable
         console.log(this.id + ': opened')
-        this.read()
-        console.log(this.options.baudRate)
+        // const { clearToSend, dataCarrierDetect, dataSetReady, ringIndicator} = await this.port.getSignals()
+        // console.log({ clearToSend, dataCarrierDetect, dataSetReady, ringIndicator})
+        this.monitor()
       }
       catch (e) {
         console.log(e)
         window.alert(e.message)
       }
     },
-
-    async read() {
-      // console.log('Reading from SerialPort()')
+    async monitor() {
+      console.log('monitor()')
       while (this.open && this.port?.readable) {
         this.open = true
         const reader = this.port.readable.getReader()
@@ -102,39 +104,43 @@ const useConnectionStore = defineStore({
         try {
           while (this.open) {
             console.log('reading...')
-            const { value, done } = await reader.read();
+            const { value, done } = await reader.read()
             if (done) {
               // |reader| has been canceled.
-              this.open = false;
+              // console.log("|reader| has been canceled")
+              this.open = false
               break;
             }
-            const decoded = decoder.decode(value) + "\n";
-            // console.log('read complete:', decoded, value, done);
-            this.messages.push(decoded);
-            await this.delay(1000);
+            const decoded = decoder.decode(value)
+            // console.log("VALOR PURO: " + value)
+            // console.log('VALOR DECODED: '+ decoded)
+            // console.log('read complete:', decoded, value, done)
+            this.messages.push(decoded)
           }
         } catch (error) {
-          console.error('reading error', error);
+          console.error('reading error', error)
         } finally {
           reader.releaseLock()
+          console.log('releaseLock')
         }
       }
     },
-
+    async write(data) {
+      if (this.port?.writable) {
+        const writer = this.port.writable.getWriter()
+        await writer.write(encoder.encode(data))
+        writer.releaseLock()
+      }
+    },
     async close() {
       if (this._reader) {
         await this._reader.cancel()
       }
       this.port.close()
     },
-
-    delay(milliseconds){
-      return new Promise(resolve => {
-          setTimeout(resolve, milliseconds);
-      });
-  },
-
   }
 })
+
+
 
 export { useConnectionStore }
