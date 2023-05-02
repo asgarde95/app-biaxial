@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue";
 import {hex} from "@/util/util.js";
 import { getUsbInfo } from "@/util/usb-ids.js"
-import { encodeWithHtml } from '@/util/asciiEncoder';
+import { encodeWithHtml, decode } from '@/util/asciiEncoder';
 
 const vid_pid = (port) => {
   const info = port.getInfo()
@@ -32,7 +32,10 @@ const useConnectionStore = defineStore({
     signals: {},
     messages: [],
     prepend: '',
-    append: '\n'
+    append: '\n',
+    cargandoDatos: false,
+    intervalo: undefined,
+
   }),
   getters: {
   },
@@ -116,6 +119,7 @@ const useConnectionStore = defineStore({
             // console.log('VALOR DECODED: '+ decoded)
             // console.log('read complete:', decoded, value, done)
             this.messages.push(decoded)
+            console.log(decoded)
           }
         } catch (error) {
           console.error('reading error', error)
@@ -138,6 +142,18 @@ const useConnectionStore = defineStore({
       }
       this.port.close()
     },
+    async getData() {
+      let self = this;
+      const cmd = this.prepend + '?' + this.append;
+      this.cargandoDatos = true;
+        this.intervalo = setInterval(function () { self.write(decode(cmd)); },1000);
+        console.log('Recargando datos');
+    },
+    async stopData(){
+      clearInterval(this.intervalo);
+      this.cargandoDatos = false;
+      console.log('Parando los datos');
+    }
   }
 })
 

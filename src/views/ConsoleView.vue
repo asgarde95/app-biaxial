@@ -11,11 +11,12 @@
                   </section>
                 </main>
             </div>
-            <div>
-                <input type="text" v-model="consoleInput"/>
-                <button @click="sendToArduino(consoleInput)">Enviar</button>
+          </div>
+            <div class="row">
+                <input class="form-control" type="text" v-model="consoleInput" style="width:94%;"/>
+                &nbsp;
+                <button class="btn btn-secondary" @click="sendToArduino(consoleInput)" style="width:85px;">Enviar</button>
             </div>
-        </div>
     </div>
 </template>
 
