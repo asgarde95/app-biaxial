@@ -26,7 +26,7 @@
                     comenzar:
                 </p>
                 <p class="text-justify">
-                    <RouterLink to="/RealTime" class="btn btn-lg btn-light fw-bold border-white bg-white">Let's go
+                    <RouterLink to="/RealTime" class="btn btn-lg btn-light fw-bold border-white bg-white">Comencemos
                     </RouterLink>
                 </p>
             </div>

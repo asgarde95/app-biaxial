@@ -13,9 +13,9 @@
             </div>
           </div>
             <div class="row">
-                <input class="form-control" type="text" v-model="consoleInput" style="width:94%;"/>
+                <input class="form-control" type="text" v-model="consoleInput" style="width:50%;"/>
                 &nbsp;
-                <button class="btn btn-secondary" @click="sendToArduino(consoleInput)" style="width:85px;">Enviar</button>
+                <button class="btn btn-secondary" @click="sendToArduino(consoleInput)" style="width:100px;">Enviar</button>
             </div>
     </div>
 </template>

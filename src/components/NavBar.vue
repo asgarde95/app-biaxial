@@ -39,7 +39,7 @@
                         <RouterLink class="link" to="/Offline">Offline</RouterLink>
                     </button>
                     <button class="btn btn-light">
-                        <RouterLink class="link" to="/Console">Consola</RouterLink>
+                        <RouterLink class="link" to="/Console">Terminal</RouterLink>
                     </button>
                     <button class="btn btn-light">
                         <RouterLink class="link" to="/About">Información</RouterLink>

@@ -7,7 +7,7 @@
         <Line :data="data" :options="options" />
       </div>
       <div class="col-md-4" style="color:white;">
-        Distancia:
+        Mover motores:
         <div class="botones">
           <button class="btn btn-secondary" @click="move(100)">+100</button>
           <button class="btn btn-secondary" @click="move(100)">+10</button>
