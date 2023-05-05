@@ -1,7 +1,7 @@
 <template>
     <NavBar></NavBar>
     <div class="container" style="margin-left=0px; margin-right=0px;">
-        <h1>Consola</h1>
+        <h1>{{ $t(20) }}</h1>
         <div class="row">
             <div style="background-color: white;">
                 <!-- <pre v-for="message in connection.messages" v-html="encodeWithHtml(message)"></pre> -->
@@ -15,7 +15,7 @@
             <div class="row">
                 <input class="form-control" type="text" v-model="consoleInput" style="width:50%;"/>
                 &nbsp;
-                <button class="btn btn-secondary" @click="sendToArduino(consoleInput)" style="width:100px;">Enviar</button>
+                <button class="btn btn-secondary" @click="sendToArduino(consoleInput)" style="width:100px;">{{ $t(23) }}</button>
             </div>
     </div>
 </template>

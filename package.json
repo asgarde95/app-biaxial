@@ -2,13 +2,18 @@
   "name": "app-biaxial",
   "version": "0.1.0",
   "private": true,
+  "description": "## Project setup ``` npm install ```",
+  "author": "",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "start": "node server.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
+    "start": "node server.js"
   },
+  "main": "server.js",
   "dependencies": {
+    "@popperjs/core": "^2.11.7",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.4",
     "bootstrap-vue": "^2.23.1",
@@ -22,19 +27,18 @@
     "serialport": "^10.5.0",
     "vue": "^3.2.47",
     "vue-chartjs": "^5.2.0",
-    "vue-i18n": "^9.2.2",
+    "vue-i18n": "^9.1.0",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^3.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-service": "~5.0.0",
+    "vue-cli-plugin-i18n": "~2.3.2"
   },
-  "description": "## Project setup ``` npm install ```",
-  "main": "server.js",
   "keywords": [],
-  "author": "",
   "license": "ISC"
 }

@@ -2,20 +2,19 @@
     <div class="logo-connect">
         <div class="logo">
             <h3>BIAXIAL</h3>
-            <label v-if="connection.open" class="connected">Conectado</label>
-            <label v-else-if="connection.physicallyConnected">Enchufado</label>
-            <label v-else class="desconnected">Desconectado</label>
+            <label v-if="connection.open" class="connected">{{ $t(12) }}</label>
+            <label v-else-if="connection.physicallyConnected">{{ $t(13) }}</label>
+            <label v-else class="desconnected">{{ $t(14) }}</label>
         </div>
         <div class="connection">
             <button class="btn btn-secondary" v-if="!connection.id || !connection.physicallyConnected"
-                            @click="connection.selectPort">Seleccionar
-                            puerto</button>
-                        <button class="btn btn-danger" v-else-if="connection.open" @click="connection.close">Desconectar</button>
-                        <button class="btn btn-success" v-else @click="connection.connect">Conectar</button>
+                            @click="connection.selectPort">{{ $t(15) }}</button>
+                        <button class="btn btn-danger" v-else-if="connection.open" @click="connection.close">{{ $t(16) }}</button>
+                        <button class="btn btn-success" v-else @click="connection.connect">{{ $t(17) }}</button>
         </div>
     </div>
         <div class="menu-trad">
-        <div class="traduccion">
+        <div class="traduccion" @click="toggleLang">
             <button class="btn btn-secondary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-translate"
                     viewBox="0 0 16 16">
@@ -27,25 +26,33 @@
                     </path>
                 </svg>
             </button>
+                <div class="sub-lang" v-if="openLang">
+                    <button class="btn btn-light" @click="$i18n.locale = `${'es'}`">
+                        ES
+                    </button>
+                    <button class="btn btn-light" @click="$i18n.locale = `${'en'}`">
+                        EN
+                    </button>
+                </div>
         </div>
         <div class="menu" @click="toggleMenu">
             <button class="btn" style="background-color: darkmagenta; color: white;" href='#'>MENÚ</button>
             <transition name="fade" apear>
                 <div class="sub-menu" v-if="openMenu">
                     <button class="btn btn-light">
-                        <RouterLink class="link" to="/RealTime">RealTime</RouterLink>
+                        <RouterLink class="link" to="/RealTime">{{ $t(18) }}</RouterLink>
                     </button>
                     <button class="btn btn-light">
-                        <RouterLink class="link" to="/Offline">Offline</RouterLink>
+                        <RouterLink class="link" to="/Offline">{{ $t(19) }}</RouterLink>
                     </button>
                     <button class="btn btn-light">
-                        <RouterLink class="link" to="/Console">Terminal</RouterLink>
+                        <RouterLink class="link" to="/Console">{{ $t(20) }}</RouterLink>
                     </button>
                     <button class="btn btn-light">
-                        <RouterLink class="link" to="/About">Información</RouterLink>
+                        <RouterLink class="link" to="/About">{{ $t(21) }}</RouterLink>
                     </button>
                     <button class="btn btn-light">
-                        <RouterLink class="link" to="/">Salir</RouterLink>
+                        <RouterLink class="link" to="/">{{ $t(22) }}</RouterLink>
                     </button>
                 </div>
             </transition>
@@ -56,12 +63,21 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useConnectionStore } from '@/store/connection.js'
+import createI18n from '@/i18n'
 const connection = useConnectionStore();
 const openMenu = ref(false)
+const openLang = ref(false)
 
 // functions that mutate state and trigger updates
 function toggleMenu() {
     openMenu.value = !openMenu.value;
+    openLang.value = false;
+
+}
+
+function toggleLang(){
+    openLang.value = !openLang.value;
+    openMenu.value = false;
 }
 
 </script>
@@ -74,7 +90,6 @@ function toggleMenu() {
 .btn {
     margin-top: 3%;
 }
-
 
 .sub-menu {
     position: absolute;
@@ -101,6 +116,15 @@ function toggleMenu() {
 
 .traduccion {
     margin: 2%;
+}
+
+.sub-lang {
+    position: absolute;
+}
+
+.sub-lang button {
+    display: block;
+    margin-top: 4px;
 }
 
 .menu {

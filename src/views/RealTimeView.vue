@@ -1,13 +1,13 @@
 <template>
   <NavBar></NavBar>
   <div class="container" style="margin-left=0px; margin-right=0px;">
-    <h1>Gráfico RealTime</h1>
+    <h1>{{ $t(29) }}</h1>
     <div class="row">
       <div class="col-md-8 text-bg-light">
         <Line :data="data" :options="options" />
       </div>
       <div class="col-md-4" style="color:white;">
-        Mover motores:
+        {{ $t(30) }}
         <div class="botones">
           <button class="btn btn-secondary" @click="move(100)">+100</button>
           <button class="btn btn-secondary" @click="move(100)">+10</button>
@@ -49,21 +49,21 @@
     </div>
     <div class="row">
       <div class="col-md-6 tests">
-        <h4>RUN A TEST</h4>
+        <h4>{{ $t(31) }}</h4>
         <div class="row">
-          <button class="col-4 btn btn-light">Start Constant Elongation Test</button>
-          <button class="col-4 btn btn-light">Start Peel Test</button>
+          <button class="col-4 btn btn-light">{{ $t(32) }}</button>
+          <button class="col-4 btn btn-light">{{ $t(33) }}</button>
         </div>
         <div class="row">
-          <button class="col-4 btn btn-light">Start Break Test</button>
-          <button class="col-4 btn btn-light">Pre-tensioning</button>
+          <button class="col-4 btn btn-light">{{ $t(34) }}</button>
+          <button class="col-4 btn btn-light">{{ $t(35) }}</button>
           <input class="form-control" type="number" style="width: 15%;" :value="option.break"/>
         </div>
       </div>
       <div class="col-md-6">
-        <h4>PARAMETERS</h4>
+        <h4>{{ $t(36) }}</h4>
         <div class="row params">
-          Load cell multiplier
+          {{ $t(37) }}
           &nbsp;
           <select class="col-4 form-control" :v-model="option.cell[0]" style="width: 125px">
             <option v-for="option in option.cell" :value="option">
@@ -72,22 +72,23 @@
             <option></option>
           </select>
           &nbsp;
-          Speed(mm/min):
+          {{ $t(38) }}
           &nbsp;
           <input class="col-3 form-control" type="number" v-model="option.speed" style="width: 70px"/>
         </div>
         <div class="row params">
-          Maximum elongation(mm):
+          {{ $t(39) }}
           &nbsp;
           <input class="col-3 form-control" type="number" v-model="option.elongation" style="width: 70px" />
         </div>
         <div class="row params">
           <div col-3>
-            <button v-if="!connection.cargandoDatos" class="btn btn-secondary" @click="getDataFromArduino()">Obtener
-              Datos</button>
-            <button v-else class="btn btn-secondary" @click="connection.stopData()">Parar los Datos</button>
+            <button v-if="!connection.cargandoDatos" class="btn btn-secondary" @click="getDataFromArduino()">
+              {{ $t(40) }}
+            </button>
+            <button v-else class="btn btn-secondary" @click="connection.stopData()">{{ $t(41) }}</button>
             &nbsp;
-            <button class="btn btn-secondary" @click="putChartData()">Datos Prueba</button>
+            <button class="btn btn-secondary" @click="putChartData()">{{ $t(28) }}</button>
           </div>
         </div>
       </div>

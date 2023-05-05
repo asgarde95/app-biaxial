@@ -1,16 +1,16 @@
 <template>
     <NavBar></NavBar>
     <div class="container" style="margin-left=0px; margin-right=0px;">
-        <h1>Gráfico Offline</h1>
+        <h1>{{ $t(24) }}</h1>
         <div class="row">
             <div class="col-10 text-bg-light">
                 <Line :data="data" :options="options" />
             </div>
             <div class="col-2">
-                <p>Para comenzar la visualización es necesario que se elija un archivo compatible primero:</p>
+                <p>{{ $t(25) }}</p>
                 <input type="file" ref="file" style="display: none" />
-                <button class="btn btn-secondary" @click="$refs.file.click()">Seleccionar archivo...</button>
-                <p>Solo se permiten archivos .csv que son compatibles con la aplicación.</p>
+                <button class="btn btn-secondary" @click="$refs.file.click()">{{ $t(26) }}</button>
+                <p>{{ $t(27) }}</p>
                 <div class="valores">
                     <input style="color:blue;" value="1000.01" size="5" />
                     <input style="color:orange;" value="1000.01" size="5" />
@@ -19,7 +19,7 @@
                     <input style="color:green;" value="1000.01" size="5" />
                     <input style="color:red;" value="1000.01" size="5" />
                 </div>
-                <button class="btn btn-secondary" @click="putChartData()">Datos Prueba</button>
+                <button class="btn btn-secondary" @click="putChartData()">{{ $t(28) }}</button>
             </div>
         </div>
     </div>
