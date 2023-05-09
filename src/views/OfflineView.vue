@@ -8,7 +8,7 @@
             </div>
             <div class="col-2">
                 <p>{{ $t(25) }}</p>
-                <input type="file" ref="file" style="display: none" />
+                <input type="file" id="file" ref="file" style="display: none" accept=".csv" @change="leer()"/>
                 <button class="btn btn-secondary" @click="$refs.file.click()">{{ $t(26) }}</button>
                 <p>{{ $t(27) }}</p>
                 <div class="valores">
@@ -93,6 +93,25 @@ function generateData() {
     newArray.push(3 + Math.random() * 3.0);
     return newArray;
 }
+
+function leer(){
+    let input = document.getElementById("file");
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function (e) {
+    const text = e.target.result;
+    const array = csvToArray(text);
+    console.log(array);
+    }
+};
+
+function csvToArray(str) {
+    let array = str.split("\r\n").map(function (line) {
+        return line.split("\t");
+    });
+    return array;
+};
 </script>
 
 <style scoped>

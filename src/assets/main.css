@@ -3,6 +3,18 @@
 }
 
 body, html{
+  min-height: 100%;
+}
+
+/* body, html{
+  background: linear-gradient(to bottom right, #55566a, #282834);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto;
+} */
+
+body{
   background: linear-gradient(to bottom right, #55566a, #282834);
   background-position: center;
   background-repeat: no-repeat;
