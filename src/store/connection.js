@@ -31,10 +31,13 @@ const useConnectionStore = defineStore({
     },
     signals: {},
     messages: [],
+    messagesV2 : [],
     prepend: '',
     append: '\n',
     cargandoDatos: false,
     intervalo: undefined,
+    separator: '\r\n',
+    canReadData: false,
 
   }),
   getters: {
@@ -105,6 +108,7 @@ const useConnectionStore = defineStore({
         const reader = this.port.readable.getReader()
         this._reader = reader
         try {
+          let aux = '';
           while (this.open) {
             console.log('reading...')
             const { value, done } = await reader.read()
@@ -115,11 +119,17 @@ const useConnectionStore = defineStore({
               break;
             }
             const decoded = decoder.decode(value)
-            // console.log("VALOR PURO: " + value)
-            // console.log('VALOR DECODED: '+ decoded)
+             //console.log("VALOR PURO: " + value)
+             //console.log('VALOR DECODED: '+ decoded)
             // console.log('read complete:', decoded, value, done)
             this.messages.push(decoded)
-            console.log(decoded)
+            aux += decoded;
+            if(aux.includes(this.separator)){
+              this.messagesV2.push(aux);
+              aux = '';
+              //console.log('*** ' + this.messagesV2);
+              //console.log('ULTIMA LECTURA: ' + this.messagesV2.slice(-1));
+            }
           }
         } catch (error) {
           console.error('reading error', error)
@@ -142,21 +152,42 @@ const useConnectionStore = defineStore({
       }
       this.port.close()
     },
-    async getData() {
+    getData() {
       let self = this;
       const cmd = this.prepend + '?' + this.append;
       this.cargandoDatos = true;
-        this.intervalo = setInterval(function () { self.write(decode(cmd)); },1000);
-        console.log('Recargando datos');
+      this.intervalo = setInterval(function () { 
+        self.write(decode(cmd));
+      },500);
+      console.log('Recargando datos');
     },
-    async stopData(){
+    stopData(){
       clearInterval(this.intervalo);
       this.cargandoDatos = false;
       console.log('Parando los datos');
+    },
+    async sendCommand(command, params){
+      let cmd = '';
+      if(typeof params !== 'undefined'){
+        cmd = this.prepend + command + params + this.append;
+        //console.log('sendCommand() ' + command + ", " + params);
+      }
+      else{
+        cmd = this.prepend + command + this.append;
+        //console.log('sendCommand() ' + command);
+      }
+      this.cargandoDatos = true;
+      await this.write(decode(cmd));
+      this.cargandoDatos = false;
+    },
+    getLastMessage(){
+      return this.messagesV2.slice(-1);
+    },
+    changeCanReadData(){
+      this.canReadData = !this.canReadData;
+      console.log('CanReadData? ' + this.canReadData);
     }
   }
 })
-
-
 
 export { useConnectionStore }
