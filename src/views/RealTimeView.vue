@@ -60,6 +60,7 @@
           <button class="col-2 btn btn-light">{{ $t(42) }}</button>
         </div>
         <input type="file" id="file" ref="file" style="display: none" accept=".csv" @change="leer()" />
+        <button class="col-2 btn btn btn-danger">STOP</button>
       </div>
       <div class="col-md-6">
         <h4>{{ $t(36) }}</h4>
@@ -260,7 +261,7 @@ function testConstantElongation() {
   connection.changeCanReadData();
 }
 
-function testBreak() {
+async function testBreak() {
   console.log("testBreak");
 
   let array = arrayData.data;
@@ -279,7 +280,7 @@ function testBreak() {
             cell1.push(parseFloat(array[i][3].replace(/,/, '.')));
             cell2.push(parseFloat(array[i][4].replace(/,/, '.')));
             cell3.push(parseFloat(array[i][5].replace(/,/, '.')));
-        }
+        
         data.value = {
             labels: displacement,
             datasets: [
@@ -305,6 +306,8 @@ function testBreak() {
                 },
             ]
         }
+        await delay(1000);
+      }
 }
 
 async function leer() {
